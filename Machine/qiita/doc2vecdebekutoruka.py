@@ -40,30 +40,29 @@ def split_into_words(doc, name=''):
 def corpus_to_sentences(corpus):
     docs = [read_document(x) for x in corpus]
     for idx, (doc, name) in enumerate(zip(docs, corpus)):
-        sys.stdout.write('\r前処理中 {} / {}'.format(idx, len(corpus)))
+        print('\r前処理中 {} / {}'.format(idx, len(corpus)))
         yield split_into_words(doc, name)
 
 
 
 corpus = list(get_all_files(path))
-gen = corpus_to_sentences(corpus)
-print(gen.__next__())
-print(gen.__next__())
+sentences = list(corpus_to_sentences(corpus))
 
-# model = models.Doc2Vec(size=400, alpha=0.0015, sample=1e-4, min_count=1, workers=4)
-# model.build_vocab(sentences)
-#
-# token_count = sum([len(sentence) for sentence in sentences])
+model = models.Doc2Vec(size=400, alpha=0.0015, sample=1e-4, min_count=1, workers=4)
+model.build_vocab(sentences)
 
-# for x in range(30):
-#     print(x)
-#     model.train(sentences, total_examples = token_count, epochs = 10)
-#     ranks = []
-#     for doc_id in range(100):
-#         inferred_vector = model.infer_vector(sentences[doc_id].words)
-#         sims = model.docvecs.most_similar([inferred_vector], topn=len(model.docvecs))
-#         rank = [docid for docid, sim in sims].index(sentences[doc_id].tags[0])
-#         ranks.append(rank)
-#         if collections.Counter(ranks)[0] >= 90:
-#             print('ok')
-#             break
+token_count = sum([len(sentence) for sentence in sentences])
+
+for x in range(30):
+    model.train(sentences, total_examples = token_count, epochs = 10)
+    ranks = []
+    for doc_id in range(len(sentences)):
+        inferred_vector = model.infer_vector(sentences[doc_id].words)
+        sims = model.docvecs.most_similar([inferred_vector], topn=len(model.docvecs))
+        rank = [docid for docid, sim in sims].index(sentences[doc_id].tags[0])
+        ranks.append(rank)
+        if collections.Counter(ranks)[0] >= 90:
+            print('ok')
+            model.save('doc2vec.model')
+            break
+    model.save('doc2vec.model')
