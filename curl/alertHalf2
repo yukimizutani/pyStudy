@@ -1,0 +1,7 @@
+                        "type": "command"
+                    },
+                    "filter": "has meta.msg",
+                    "type": "filter"
+                },
+                "enabled": true
+            }

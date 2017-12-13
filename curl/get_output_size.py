@@ -25,7 +25,7 @@ def main():
     print('Received: {}'.format(received_date))
     print('Current: {}'.format(current))
 
-    current_size = obj['resources'][0]['resource']['progress'][0]['outputSize']
+    current_size = obj['resources'][0]['resource']['progress'][1]['outputSize']
     print('Output: {}'.format(current_size))
 
     print('EPS: {0:.2f}'.format(int(current_size) / (current - received_date).seconds))

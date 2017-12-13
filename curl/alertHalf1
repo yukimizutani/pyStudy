@@ -1,0 +1,11 @@
+",
+                "tree": {
+                    "id": 63,
+                    "name": "everything",
+                    "leftBranch": {
+                        "id": 64,
+                        "name": "kvset",
+                        "bundling": {
+                            "enabled": true,
+                            "timeRange": 10000
+                        },
