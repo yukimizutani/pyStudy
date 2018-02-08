@@ -1,10 +1,14 @@
+import random
+import string
+
 from elasticsearch import Elasticsearch, helpers
+from datetime import datetime, timedelta
 
 file = 'indexdata.csv'
 
 
 def do_index(es_index):
-    es = Elasticsearch('xsiem02:9200')
+    es = Elasticsearch('localhost:9201')
     f = open(file)
 
     print('Indexing docs into: ' + es_index)
@@ -12,25 +16,33 @@ def do_index(es_index):
     docs = []
     for doc_id, line in enumerate(f):
         fields = line.rstrip().split(",")
-        doc = {"_index": es_index, "_type": "log", "_id": doc_id + 11, "passcode": fields[0]}
+        doc = {"_index": es_index, "_type": "log", "_id": doc_id + 11,
+               "namae": fields[0], "date": fields[1], "passcode": fields[2]}
         docs.append(doc)
-        if len(docs) == 1000:
+        if len(docs) == 10000:
             res = helpers.bulk(es, docs)
             print(res)
             docs = []
     if len(docs) > 0:
         res = helpers.bulk(es, docs)
         print(res)
+    print('Indexed to {}'.format(es_index))
+    f.close()
 
 
 def update_index_data():
     f = open(file, 'w')
+    dt = datetime.now()
+    rand_str = lambda n: ''.join([random.choice(string.ascii_lowercase) for i in range(n)])
 
-    for val in range(0, 1000):
-        f.write(str(val) + '\n')
+    for val in range(0, 100000):
+        dt = dt - timedelta(1)
+        f.write(rand_str(10) + ',' + str(dt.isoformat()) + ',' + str(val) + '\n')
+    f.close()
 
 
 if __name__ == '__main__':
     update_index_data()
-    for i in range(0, 5):
+    for i in range(5, 100):
         do_index('tesu' + str(i))
+    print('Finished indexing')
