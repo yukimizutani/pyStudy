@@ -5,10 +5,10 @@ from elasticsearch import Elasticsearch, helpers
 from datetime import datetime, timedelta
 
 file = 'indexdata.csv'
+es = Elasticsearch('localhost:9200')
 
 
 def do_index(es_index):
-    es = Elasticsearch('localhost:9201')
     f = open(file)
 
     print('Indexing docs into: ' + es_index)
@@ -17,7 +17,7 @@ def do_index(es_index):
     for doc_id, line in enumerate(f):
         fields = line.rstrip().split(",")
         doc = {"_index": es_index, "_type": "log", "_id": doc_id + 11,
-               "namae": fields[0], "date": fields[1], "passcode": fields[2]}
+               "namae": fields[0], "date": fields[1], "passcode": fields[2], "date2": fields[3]}
         docs.append(doc)
         if len(docs) == 10000:
             res = helpers.bulk(es, docs)
@@ -37,12 +37,14 @@ def update_index_data():
 
     for val in range(0, 100000):
         dt = dt - timedelta(1)
-        f.write(rand_str(10) + ',' + str(dt.isoformat()) + ',' + str(val) + '\n')
+        dt2 = dt - timedelta(random.randint(-3, 3))
+        f.write(rand_str(10) + ',' + str(dt.isoformat()) + ',' + str(val) + ',' + str(dt2.isoformat()) + '\n')
     f.close()
 
 
 if __name__ == '__main__':
     update_index_data()
-    for i in range(5, 100):
+    for i in range(0, 100):
         do_index('tesu' + str(i))
-    print('Finished indexing')
+    # es.indices.flush()
+    print('Finished indexing at {}'.format(datetime.now()))
