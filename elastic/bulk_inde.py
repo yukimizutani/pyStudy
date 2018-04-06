@@ -1,5 +1,6 @@
 import random
 import string
+from time import sleep
 
 from elasticsearch import Elasticsearch, helpers
 from datetime import datetime, timedelta
@@ -27,6 +28,7 @@ def do_index(es_index):
         res = helpers.bulk(es, docs)
         print(res)
     print('Indexed to {}'.format(es_index))
+    sleep(1)
     f.close()
 
 
@@ -35,7 +37,7 @@ def update_index_data():
     dt = datetime.now()
     rand_str = lambda n: ''.join([random.choice(string.ascii_lowercase) for i in range(n)])
 
-    for val in range(0, 100000):
+    for val in range(0, 1):
         dt = dt - timedelta(1)
         dt2 = dt - timedelta(random.randint(-3, 3))
         f.write(rand_str(10) + ',' + str(dt.isoformat()) + ',' + str(val) + ',' + str(dt2.isoformat()) + '\n')
@@ -44,7 +46,7 @@ def update_index_data():
 
 if __name__ == '__main__':
     update_index_data()
-    for i in range(0, 100):
-        do_index('tesu' + str(i))
-    # es.indices.flush()
+    for i in range(11, 30):
+        do_index('x2018_02_' + str(i))
+    es.indices.flush()
     print('Finished indexing at {}'.format(datetime.now()))

@@ -1,7 +1,14 @@
+from datetime import datetime
+from time import sleep
+
 from elasticsearch import Elasticsearch
 import json
 
-es = Elasticsearch("localhost:9200")
+aws = 'awsx_test_01:9201'
+local = 'localhost:9200'
+local2 = 'localhost:9201'
+es = Elasticsearch(local)
+file = 'status.csv'
 
 
 def pretty(js):
@@ -26,7 +33,53 @@ def template():
     return pretty(es.indices.get_template())
 
 
+def count():
+    return es.count()['count']
+
+
+def diff(num, now, start):
+    print(now)
+    print(start)
+    print(now - start)
+    print(num)
+    print(num / (now - start).seconds)
+
+
+def calc():
+    # 2018-03-15 14:19:42
+    start = datetime.strptime("2018-03-16 13:22:35", "%Y-%m-%d %H:%M:%S")
+    last = 0
+    while True:
+        now = datetime.now()
+        current = count()
+
+        diff(current, now, start)
+        if last > 0:
+            print("Current EPS:")
+            diff(current - last, now, last_time)
+        last = current
+        last_time = now
+        sleep(60)
+
+
+def status():
+    return es.cluster.health()['status']
+
+
+def record_status():
+    f = open(file, 'w')
+    f.write('dt,status' + '\n')
+    while True:
+        f.write(datetime.now().isoformat() + ',' + status() + '\n')
+        f.flush()
+        # sleep()
+
+
 if __name__ == '__main__':
     print(delete(show_indices()))
-    print(mapping())
-    print(template())
+    # print(mapping())
+    # print(template())
+    # print(show_indices().keys())?
+    # calc()
+    # record_status()
+    print(count())
