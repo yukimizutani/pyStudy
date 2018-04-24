@@ -4,6 +4,7 @@ from time import sleep
 from elasticsearch import Elasticsearch
 import json
 
+xsiem = 'xsiem01:9201'
 aws = 'awsx_test_01:9201'
 local = 'localhost:9200'
 local2 = 'localhost:9201'
@@ -45,9 +46,8 @@ def diff(num, now, start):
     print(num / (now - start).seconds)
 
 
-def calc():
-    # 2018-03-15 14:19:42
-    start = datetime.strptime("2018-03-16 13:22:35", "%Y-%m-%d %H:%M:%S")
+def calc(start_str):
+    start = datetime.strptime(start_str, "%Y-%m-%d %H:%M:%S")
     last = 0
     while True:
         now = datetime.now()
@@ -77,9 +77,9 @@ def record_status():
 
 if __name__ == '__main__':
     print(delete(show_indices()))
-    # print(mapping())
-    # print(template())
+    print(mapping())
+    print(template())
     # print(show_indices().keys())?
-    # calc()
+    # calc("2018-03-16 13:22:35")
     # record_status()
-    print(count())
+    # print(count())

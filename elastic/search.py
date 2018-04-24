@@ -2,7 +2,11 @@ import json
 
 from elasticsearch import Elasticsearch
 
-es = Elasticsearch('awsx_test_01:9201')
+xsiem = 'xsiem01:9201'
+aws = 'awsx_test_01:9201'
+local = 'localhost:9200'
+local2 = 'localhost:9201'
+es = Elasticsearch(local)
 
 
 def pretty(js):
@@ -17,9 +21,9 @@ def search():
 if __name__ == '__main__':
     res = search()
     print(res)
-    for key in res.keys():
-        if key == 'profile':
-            for key2 in res[key]:
-                for key3 in res[key][key2]:
-                    print(key3['id'].replace('[', '').split(']')[1])
-                    print(key3['searches'][0]['query'][0]['time_in_nanos'])
+    # for key in res.keys():
+    #     if key == 'profile':
+    #         for key2 in res[key]:
+    #             for key3 in res[key][key2]:
+    #                 print(key3['id'].replace('[', '').split(']')[1])
+    #                 print(key3['searches'][0]['query'][0]['time_in_nanos'])
