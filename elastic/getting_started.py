@@ -77,8 +77,8 @@ def record_status():
 
 if __name__ == '__main__':
     print(delete(show_indices()))
-    print(mapping())
-    print(template())
+    # print(mapping())
+    # print(template())
     # print(show_indices().keys())?
     # calc("2018-03-16 13:22:35")
     # record_status()

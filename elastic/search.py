@@ -20,7 +20,7 @@ def search():
 
 if __name__ == '__main__':
     res = search()
-    print(res)
+    print(pretty(res))
     # for key in res.keys():
     #     if key == 'profile':
     #         for key2 in res[key]:
