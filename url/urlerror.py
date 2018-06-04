@@ -1,5 +1,4 @@
-import urllib.request
-import urllib.error
+import urllib
 
 if __name__ == '__main__':
     try:

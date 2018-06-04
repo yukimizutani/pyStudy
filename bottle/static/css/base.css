@@ -1,0 +1,25 @@
+body {
+    display: inline-block;
+    font: italic 1.2em "Fira Sans", serif;
+}
+
+#toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 40px;
+    width: 100%;
+    background-color: #F28CBB;
+}
+
+#content {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+}
