@@ -17,21 +17,21 @@
         <!-- ツールバー -->
         <div id="toolbar">
             {% block toolbar %}
-            {% include "toolbar.tpl" %}
+            {% include "toolbar/toolbar.tpl" %}
             {% endblock %}
         </div>
 
         <!-- コンテンツ部分 -->
         <div id="content">
             {% block content %}
-            {% include "content.tpl" %}
+            {% include "content/content.tpl" %}
             {% endblock %}
         </div>
 
         <!-- 共通フッター -->
         <div id="footer">
             {% block footer %}
-            {% include "footer.tpl" %}
+            {% include "footer/footer.tpl" %}
             {% endblock %}
         </div>
     </body>

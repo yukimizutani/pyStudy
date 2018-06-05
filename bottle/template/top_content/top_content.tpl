@@ -1,19 +1,19 @@
 <div class="notification">
 <div>重要なお知らせ</div>
 {% block notification %}
-{% include "notification.tpl" %}
+{% include "top_content/notification.tpl" %}
 {% endblock %}
 </div>
 <div class="news">
 <div>お知らせ</div>
 {% block news %}
-{% include "news.tpl" %}
+{% include "top_content/news.tpl" %}
 {% endblock %}
 </div>
 <div class="description">
 <div>サイトの説明</div>
 {% block description %}
-{% include "description.tpl" %}
+{% include "top_content/description.tpl" %}
 {% endblock %}
 </div>
 <style type="text/css">

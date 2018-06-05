@@ -6,7 +6,6 @@ from study_jinja2.basics import include, extend
 import os
 
 TEMPLATE_PATH.append("./template")
-TEMPLATE_PATH.append("../study_jinja2/basics")
 app = Bottle()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -21,7 +20,12 @@ def static_css(filename):
 
 @app.route('/')
 def root():
-    return template('child.tpl')
+    return template('base/child.tpl')
+
+
+@app.route('/content/top_content')
+def top_content():
+    return template('smthsmth')
 
 
 @app.route('/tesuto')
