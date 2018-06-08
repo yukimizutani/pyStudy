@@ -18,14 +18,16 @@ def static_css(filename):
     return static_file(filename, root=STATIC_DIR + "/css")
 
 
-@app.route('/')
+@app.route('/static/images/<filename:path>')
+def static_images(filename):
+    return static_file(filename, root=STATIC_DIR + "/images")
+
+
+@app.route('/', method='GET')
 def root():
-    return template('base/child.tpl')
-
-
-@app.route('/content/top_content')
-def top_content():
-    return template('smthsmth')
+    content_type = request.query.contentType
+    content_type = "top" if content_type is None else content_type
+    return template('base/child.tpl', contentType=content_type)
 
 
 @app.route('/tesuto')
@@ -64,4 +66,4 @@ def do_login():
 
 
 if __name__ == "__main__":
-    run(app=app, host="0.0.0.0", quiet=False, reloader=True, debug=True)
+    run(app=app, host="localhost", quiet=False, reloader=True, debug=True)

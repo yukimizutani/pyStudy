@@ -4,7 +4,6 @@
     <head>
         <!-- 共通ヘッダ -->
         {% block head %}
-        <link rel="stylesheet" href="/static/css/base.css" type="text/css" />
         <title>{% block title %}{% endblock %} - チャンコーデ</title>
         {% endblock %}
         <script>
@@ -12,19 +11,17 @@
               console.log(plugin);
             }
         </script>
+        <link rel="stylesheet" href="/static/css/base.css" type="text/css" />
     </head>
     <body>
         <!-- ツールバー -->
         <div id="toolbar">
-            {% block toolbar %}
             {% include "toolbar/toolbar.tpl" %}
-            {% endblock %}
         </div>
 
         <!-- コンテンツ部分 -->
         <div id="content">
             {% block content %}
-            {% include "content/content.tpl" %}
             {% endblock %}
         </div>
 

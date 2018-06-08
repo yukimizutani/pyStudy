@@ -1,12 +1,17 @@
-{% if x == "shop" %}
+{% if contentType == "shop" %}
 <div class="content">
 {% include "shop_content/shop_content.tpl" %}
 </div>
-{% elif x == "code" %}
+{% elif contentType == "code" %}
 <div class="content">
 {% include "code_content/code_content.tpl" %}
 </div>
-{% elif x == "trade" %}
+{% elif contentType == "trade" %}
+<div class="content">
+{% include "trade_content/trade_content.tpl" %}
+</div>
+{% else %}
+{% elif contentType == "myPage" %}
 <div class="content">
 {% include "trade_content/trade_content.tpl" %}
 </div>

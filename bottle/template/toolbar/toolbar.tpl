@@ -1,32 +1,31 @@
-<div class="boxContainer">
-	<div class="box" onclick=show('top')>マイベージ</div>
-	<div class="box" onclick=show("code")>マイコーデ</div>
-	<div class="box" onclick=show("trade")>コーデトレード(Coming soon)</div>
-    <div class="box" onclick=show("shop")>遊べるお店(Coming soon)</div>
-</div>
+<form class="content_type_boxContainer" method="GET" action="/">
+    <button class="content_type_box" name='contentType' value='top'>Top</button>
+	<button class="content_type_box" name='contentType' value='myPage'>マイベージ</button>
+	<button class="content_type_box" name='contentType' value='code'>マイコーデ</button>
+	<button class="content_type_box" name='contentType' value='trade'>コーデトレード(Coming soon)</button>
+    <button class="content_type_box" name='contentType' value='shop'>遊べるお店(Coming soon)</button>
+</form>
 <style type="text/css">
-.boxContainer {
+.content_type_boxContainer {
     display: table;
     table-layout: fixed;
     width: 100%;
-    max-width: 100%;
-    min-width: 480px;
-    margin: 0 auto;
-    padding: 0 30px;
+    height: 100%;
     box-sizing: border-box;
 }
-.box {
-    display: table-cell;
+.content_type_box {
+    display: inline-block;
     vertical-align: middle;
     text-align: center;
-    color: #ffffff;
-    border: 1px dotted gray;
     text-color: black;
+    width: 20%;
+    height: 100%;
+    background-color: #F28CBB;
+    font-size: 1em;
 }
-.box:hover {
+.content_type_box:hover {
    color: #000080; /* 文字色 */
    background-color: #ccffff; /* 背景色 */
    border: 1px solid blue; /* 実線の枠を付ける(任意) */
 }
-
 </style>
