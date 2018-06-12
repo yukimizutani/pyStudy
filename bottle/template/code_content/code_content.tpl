@@ -1,6 +1,5 @@
 <div class="item_content">
 <div id="item_list_title">アイテム一覧</div>
-<div id="item_list">
 <p>対象バージョン：<br>
 <select name="version">
 <option value="0">全て</option>
@@ -8,9 +7,13 @@
 <option value="2">第二弾</option>
 <option value="3">第三弾</option>
 </select></p>
-{% set items = ["kr1","kr2","kr3"] %}
+<div id="item_list">
+{% for key, items in codeDict.items() %}
+<div id="item_column">
 {% for item in items %}
-<img id="item" src="static/images/{{item}}.jpg" width="240" height="200" /> {{item.tes}}
+<img id="item" src="static/images/{{key}}/{{item}}" width="120" height="100"/>
+{% endfor %}
+</div>
 {% endfor %}
 </div>
 </div>
@@ -37,6 +40,9 @@
     margin: 0 auto;
     padding: 0 30px;
     box-sizing: border-box;
+}
+#item_column {
+    display: block;
 }
 #item {
     display: inline-block;
