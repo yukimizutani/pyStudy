@@ -11,7 +11,7 @@
 {% for key, items in codeDict.items() %}
 <div id="item_column">
 {% for item in items %}
-<img id="item" src="static/images/{{key}}/{{item}}" width="120" height="100"/>
+<img class="item" src="static/images/{{key}}/{{item}}" width="120" height="100"/>
 {% endfor %}
 </div>
 {% endfor %}
@@ -44,12 +44,42 @@
 #item_column {
     display: block;
 }
-#item {
+.item {
     display: inline-block;
     vertical-align: middle;
     text-align: center;
     color: #ffffff;
-    border: 1px dotted gray;
-    text-color: black;
+    border: 1px solid pink;
+}
+.item:hover {
+   color: #000080; /* 文字色 */
+   background-color: #ccffff; /* 背景色 */
+   border: 1px solid blue; /* 実線の枠を付ける(任意) */
+}
+.greyout {
+    filter: grayscale(100%);
+}
+.blur {
+    filter: blur(3px);
 }
 </style>
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script language="javascript">
+    var addclass = 'greyout';
+    var $cols = $('.item').click(function(e) {
+        if ($(this).hasClass(addclass)){
+            $(this).removeClass(addclass);
+        } else {
+            $(this).addClass(addclass);
+        }
+    });
+    var addclass2 = 'blur';
+    $('.item').dblclick(function(e) {
+        if ($(this).hasClass(addclass2)){
+            $(this).removeClass(addclass2);
+        } else {
+            $(this).addClass(addclass2);
+        }
+    });
+</script>

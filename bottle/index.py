@@ -4,8 +4,6 @@ from bottle import Bottle, run, get, post, request, static_file
 from bottle import TEMPLATE_PATH, jinja2_template as template
 from study_jinja2.basics import include, extend
 import os
-from os import listdir
-from os.path import isfile, join
 
 TEMPLATE_PATH.append("./template")
 app = Bottle()
