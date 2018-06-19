@@ -4,6 +4,7 @@ from bottle import Bottle, run, get, post, request, static_file
 from bottle import TEMPLATE_PATH, jinja2_template as template
 from study_jinja2.basics import include, extend
 import os
+from collections import OrderedDict
 
 TEMPLATE_PATH.append("./template")
 app = Bottle()
@@ -40,7 +41,7 @@ def get_image_files():
             file_dict[key[0]].append(key[1])
         else:
             file_dict[key[0]] = [key[1]]
-    return file_dict
+    return OrderedDict(sorted(file_dict.items(), key=lambda x: x[0]))
 
 
 @app.route('/', method='GET')
@@ -95,6 +96,14 @@ def do_login():
     password = request.forms.get('password')
 
     return template("{username} {password}".format(username=username, password=password))
+
+
+@app.route('', method='POST')
+def save_items():
+    dirname = request.forms.get('dir')
+    item = request.forms.get('item')
+
+    ## do save
 
 
 if __name__ == "__main__":

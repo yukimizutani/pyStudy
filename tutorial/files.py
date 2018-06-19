@@ -12,9 +12,16 @@ for dir_, _, files in os.walk(root_dir):
 
 for elm in file_set:
     key = str(elm).split('/')
-    print(key)
     if key[0] in file_dict:
         file_dict[key[0]].append(key[1])
     else:
         file_dict[key[0]] = [key[1]]
+print(file_dict)
+for k in file_dict.keys():
+    print(k.split('-')[1] + str(file_dict[k]))
+
+for k in sorted(file_dict.keys()):
+    print(k + str(file_dict[k]))
+
+file_dict = sorted(file_dict.items(), key=lambda x: x[0])
 print(file_dict)
