@@ -2,15 +2,19 @@
 
 from bottle import Bottle, run, get, post, request, static_file
 from bottle import TEMPLATE_PATH, jinja2_template as template
-from study_jinja2.basics import include, extend
+from study_jinja2.basics import include
 import os
 from collections import OrderedDict
+import sqlite3
+import json
 
 TEMPLATE_PATH.append("./template")
 app = Bottle()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+conn = sqlite3.connect('code.db')
 
 
 # static file CSS
@@ -24,8 +28,8 @@ def static_images(filename):
     return static_file(filename, root=STATIC_DIR + "/images")
 
 
-def get_image_files():
-    root_dir = "/home/yuki/PycharmProjects/pyStudy/bottle/static/images"
+def get_image_files(return_dict=True):
+    root_dir = STATIC_DIR + "/images"
     file_set = set()
     file_dict = {}
 
@@ -35,25 +39,86 @@ def get_image_files():
             rel_file = os.path.join(rel_dir, fileName)
             file_set.add(rel_file)
 
-    for elm in file_set:
-        key = str(elm).split('/')
-        if key[0] in file_dict:
-            file_dict[key[0]].append(key[1])
+    if return_dict:
+        for elm in file_set:
+            key = str(elm).split('/')
+            if key[0] in file_dict:
+                file_dict[key[0]].append(key[1])
+            else:
+                file_dict[key[0]] = [key[1]]
+        for key in file_dict.keys():
+            file_dict[key].sort()
+        return OrderedDict(sorted(file_dict.items(), key=lambda x: x[0]))
+
+
+def load_db(user, password):
+    with conn:
+        c = conn.cursor()
+        c.execute("SELECT * FROM stocks WHERE user=?", (user,))
+        record = c.fetchone()
+        if record:
+            print("Found!")
+            return json.loads(record[1])
         else:
-            file_dict[key[0]] = [key[1]]
-    return OrderedDict(sorted(file_dict.items(), key=lambda x: x[0]))
+            print("Not found...")
+            c.execute("SELECT * FROM stocks WHERE user=?", ("all",))
+            all_code = json.loads(c.fetchone()[1])
+            c.execute("INSERT INTO stocks VALUES (?,?,?)", (user, json.dumps(all_code), password))
+            return all_code
+
+
+def update_db(user, owned_codes, password):
+    with conn:
+        c = conn.cursor()
+        c.execute("SELECT * FROM stocks WHERE user=?", (user,))
+        rec = c.fetchone()
+        if rec:
+            print("Found!")
+            old_items = json.loads(rec[1])
+            for own_code in owned_codes:
+                own_code = own_code.replace('static/images/', '').split('/')
+                if own_code[0] in old_items.keys():
+                    if own_code[1] in old_items[own_code[0]]:
+                        old_items[own_code[0]].remove(own_code[1])
+            c.execute('UPDATE stocks SET list = ? WHERE user = ?', (json.dumps(old_items), user))
+        else:
+            print("Not found...")
+            c.execute("SELECT * FROM stocks WHERE user=?", ("all",))
+            all_code = json.loads(c.fetchone()[1])
+            c.execute("INSERT INTO stocks VALUES (?,?,?)", (user, all_code, password))
+
+
+def reset_db(user, codes):
+    with conn:
+        c = conn.cursor()
+        if codes is None:
+            c.execute("SELECT * FROM stocks WHERE user=?", ("all",))
+            code = json.loads(c.fetchone()[1])
+        else:
+            code = {}
+            for own_code in codes:
+                own_code = own_code.replace('static/images/', '').split('/')
+                if own_code[0] in code:
+                    code[own_code[0]].append(own_code[1])
+                else:
+                    code[own_code[0]] = [own_code[1]]
+        c.execute('UPDATE stocks SET list = ? WHERE user = ?', (json.dumps(code), user))
 
 
 @app.route('/', method='GET')
 def root():
     content_type = request.query.contentType
-    content_type = "top" if content_type is None else content_type
+    usr = request.query.usr
+    password = request.query.password
+    content_type = "code" if content_type is '' else content_type
+    user = "admin" if usr is '' else usr
+    password = "admin" if password is '' else password
     if content_type == 'top':
         child_elem = template('top_content/top_content.tpl')
     elif content_type == 'myPage':
         child_elem = template('mypage_content/mypage_content.tpl')
     elif content_type == 'code':
-        child_elem = template('code_content/code_content.tpl', codeDict=get_image_files())
+        child_elem = template('code_content/code_content.tpl', codeDict=load_db(user, password))
     elif content_type == 'trade':
         child_elem = template('trade_content/trade_content.tpl')
     elif content_type == 'shop':
@@ -61,6 +126,11 @@ def root():
     else:
         child_elem = template('top_content/top_content.tpl')
     return template('base/child.tpl', contentType=content_type, childElem=child_elem)
+
+
+@app.route('/', method='POST')
+def reload():
+    return "hello"
 
 
 @app.route('/tesuto')
@@ -95,16 +165,41 @@ def do_login():
     username = request.forms.get('username')
     password = request.forms.get('password')
 
-    return template("{username} {password}".format(username=username, password=password))
+    return "{username} {password}".format(username=username, password=password)
 
 
-@app.route('', method='POST')
+@app.route('/save_items', method='POST')
 def save_items():
-    dirname = request.forms.get('dir')
-    item = request.forms.get('item')
+    items = request.json
+    user = 'admin'
+    password = 'admin'
 
-    ## do save
+    # do save
+    update_db(user, items, password)
+
+    return "Updated"
+
+
+@app.route('/reset_items', method='POST')
+def reset_items():
+    user = request.forms.get('usr')
+    codes = request.forms.get('code')
+
+    # do reset
+    reset_db(user, codes)
+
+    return "hello"
+
+
+@app.route('/initialize', method='POST')
+def initialize():
+    user = request.forms.get('usr')
+
+    # do reset
+    reset_db(user, None)
+
+    return "hello"
 
 
 if __name__ == "__main__":
-    run(app=app, host="localhost", quiet=False, reloader=True, debug=True)
+    run(app=app, host="localhost", port=8081, quiet=False, reloader=True, debug=True)

@@ -5,14 +5,14 @@
 {% block title %}{{contentType}}{% endblock %}
 
 {% block content %}
-{% include "top_content/notification.tpl" %}
+<!--{% include "top_content/notification.tpl" %}-->
 {{ childElem }}
 <style type="text/css">
 .content {
     position: relative;
     display: block;
     border: 5px;
-}
+}l
 
 .notification {
     position: relative;

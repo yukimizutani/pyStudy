@@ -4,7 +4,7 @@ import os
 import requests
 from bs4 import BeautifulSoup
 
-site = 'https://prichan.jp/items'
+site = 'https://prichan.jp/items/2nd.html'
 base = 'https://prichan.jp'
 
 
@@ -33,7 +33,7 @@ def scavenge():
             if image_group is not None:
                 dir_name = image_group.group(1)
             else:
-                dir_name = '1-21'
+                dir_name = '2-20'
         filename = re.search(r'/([\w_-]+[.](jpg|gif|png))$', url)
         if filename is not None and 'dir_name' in locals() and not has_outfits:
             relative_path = dir_name + '/' + filename.group(1)
