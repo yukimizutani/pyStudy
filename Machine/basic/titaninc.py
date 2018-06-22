@@ -56,7 +56,7 @@ if __name__ == "__main__":
     titanic = titanic.drop("survived", axis=1)
 
     # SVC.fit(入力データ、答え)で学習。gamma=1.0
-    clf = svm.SVC(gamma=0.01)
+    clf = svm.SVC(gamma=0.5)
     clf.fit(titanic[:800], deadOrAlive[:800])
 
     headers2 = [c for c in titanic.columns]

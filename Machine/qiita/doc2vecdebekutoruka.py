@@ -1,3 +1,4 @@
+# # -*- coding: utf-8 -*-
 import os
 import sys
 import re
@@ -31,7 +32,7 @@ def split_into_words(doc, name=''):
     for line in lines:
         chunks = line.split('\t')
         if len(chunks) > 3 and (chunks[3].startswith('動詞') or chunks[3].startswith('形容詞') or (
-            chunks[3].startswith('名詞') and not chunks[3].startswith('名詞-数'))):
+                chunks[3].startswith('名詞') and not chunks[3].startswith('名詞-数'))):
             words.append(chunks[0])
     return TaggedDocument(words=words, tags=[name])
 
@@ -44,7 +45,6 @@ def corpus_to_sentences(corpus):
         yield split_into_words(doc, name)
 
 
-
 corpus = list(get_all_files(path))
 sentences = list(corpus_to_sentences(corpus))
 
@@ -54,7 +54,7 @@ model.build_vocab(sentences)
 token_count = sum([len(sentence) for sentence in sentences])
 
 for x in range(30):
-    model.train(sentences, total_examples = token_count, epochs = 10)
+    model.train(sentences, total_examples=token_count, epochs=10)
     ranks = []
     for doc_id in range(len(sentences)):
         inferred_vector = model.infer_vector(sentences[doc_id].words)

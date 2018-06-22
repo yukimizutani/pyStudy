@@ -1,3 +1,6 @@
+# # -*- coding: utf-8 -*-
+from numpy import mean
+
 if __name__ == '__main__':
     val = [10, 19, 20]
     print(val[0])
@@ -20,7 +23,7 @@ if __name__ == '__main__':
 
     print(sum(val))
     print(max(val))
-    print(min(val))
+    print(mean(val))
 
     foo = [0, 1, 2, 3, 4] * 8
     foo.append(55)
