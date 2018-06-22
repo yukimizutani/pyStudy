@@ -1,8 +1,7 @@
 # -*- coding:utf-8 -*-
 
-from bottle import Bottle, run, get, post, request, static_file
+from bottle import Bottle, run, get, post, request, static_file, redirect
 from bottle import TEMPLATE_PATH, jinja2_template as template
-from study_jinja2.basics import include
 import os
 from collections import OrderedDict
 import sqlite3
@@ -105,37 +104,57 @@ def reset_db(user, codes):
         c.execute('UPDATE stocks SET list = ? WHERE user = ?', (json.dumps(code), user))
 
 
-@app.route('/', method='GET')
+@app.route('/my_code', method='POST')
 def root():
     content_type = request.query.contentType
-    usr = request.query.usr
-    password = request.query.password
-    content_type = "code" if content_type is '' else content_type
-    user = "admin" if usr is '' else usr
-    password = "admin" if password is '' else password
-    if content_type == 'top':
-        child_elem = template('top_content/top_content.tpl')
-    elif content_type == 'myPage':
-        child_elem = template('mypage_content/mypage_content.tpl')
-    elif content_type == 'code':
-        child_elem = template('code_content/code_content.tpl', codeDict=load_db(user, password))
-    elif content_type == 'trade':
-        child_elem = template('trade_content/trade_content.tpl')
-    elif content_type == 'shop':
-        child_elem = template('shop_content/shop_content.tpl')
+    usr = request.forms.get('username')
+    password = request.forms.get('password')
+    action = request.forms.get('action')
+    # check credential
+    if action == 'login':
+        if usr == '' or password == '':
+            print("Empty")
+        else:
+            with conn:
+                c = conn.cursor()
+                c.execute("SELECT * FROM stocks WHERE user=? AND password=?", (usr, password))
+                rec = c.fetchone()
+                if rec:
+                    print("Found!")
+                    content_type = "code" if content_type is '' else content_type
+                    if content_type == 'top':
+                        child_elem = template('top_content/top_content.tpl')
+                    elif content_type == 'myPage':
+                        child_elem = template('mypage_content/mypage_content.tpl')
+                    elif content_type == 'code':
+                        child_elem = template('code_content/code_content.tpl', codeDict=load_db(usr, password))
+                    elif content_type == 'trade':
+                        child_elem = template('trade_content/trade_content.tpl')
+                    elif content_type == 'shop':
+                        child_elem = template('shop_content/shop_content.tpl')
+                    else:
+                        child_elem = template('top_content/top_content.tpl')
+                    return template('base/child.tpl', contentType=content_type, childElem=child_elem)
+                else:
+                    print("Not found!")
+                    return redirect('/')
+    elif action == 'register':
+        if usr == '' or password == '':
+            print("Empty")
+        else:
+            print("register")
+            with conn:
+                c = conn.cursor()
+                c.execute("SELECT * FROM stocks WHERE user=?", (usr,))
+                rec = c.fetchone()
+                if rec:
+                    print("Found!")
+                    return template('new/create_new.html', message="そのユーザー名は使用できません")
+                else:
+                    child_elem = template('code_content/code_content.tpl', codeDict=load_db(usr, password))
+                    return template('base/child.tpl', contentType='code', childElem=child_elem)
     else:
-        child_elem = template('top_content/top_content.tpl')
-    return template('base/child.tpl', contentType=content_type, childElem=child_elem)
-
-
-@app.route('/', method='POST')
-def reload():
-    return "hello"
-
-
-@app.route('/tesuto')
-def tesuto():
-    return include.include_template()
+        print("what")
 
 
 @app.route('/hello/<name>')
@@ -148,7 +167,7 @@ def date(month, day, path):
     return "{month}/{day} {path}".format(month=month, day=day, path=path)
 
 
-@app.route('/login', method='GET')
+@app.route('/', method='GET')
 def login():
     username = request.query.get('user')
     password = request.query.get('pass')
@@ -160,12 +179,9 @@ def login():
     return template('login/login.html', username=username, password=password)
 
 
-@app.route('/login', method='POST')  # or @post('/post')
-def do_login():
-    username = request.forms.get('username')
-    password = request.forms.get('password')
-
-    return "{username} {password}".format(username=username, password=password)
+@app.route('/create_new', method='POST')
+def create_new():
+    return template('new/create_new.html')
 
 
 @app.route('/save_items', method='POST')
@@ -202,4 +218,4 @@ def initialize():
 
 
 if __name__ == "__main__":
-    run(app=app, host="localhost", port=8081, quiet=False, reloader=True, debug=True)
+    run(app=app, host="localhost", port=8080, quiet=False, reloader=True, debug=True)

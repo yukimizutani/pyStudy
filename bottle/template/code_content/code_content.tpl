@@ -23,6 +23,7 @@
 .item_content {
     display: block;
     border: 1px dotted gray;
+    font-size: 50px;
 }
 #select_version {
 }
@@ -67,7 +68,16 @@
    filter: blur(3px);
 }
 button, select {
-  font-size: 30px;
+    font-size: 50px;
+}
+.active {
+    color: black;
+}
+#nav a {
+    font-size: 50px;
+}
+option  {
+    font-size: 50px;
 }
 }
 </style>
@@ -139,7 +149,7 @@ button, select {
                 type: "POST",
                 data: JSON.stringify(images),
                 contentType: "application/json; charset=utf-8",
-                url: "http://localhost:8081/save_items"
+                url: "http://localhost:8080/save_items"
             }).then(function(data) {
                 selectedItems.each(function () {
                     $(this).hide();
@@ -163,7 +173,7 @@ button, select {
                 type: "POST",
                 data: userInfo,
                 contentType: "application/json; charset=utf-8",
-                url: "http://localhost:8081/reset_items"
+                url: "http://localhost:8080/reset_items"
             }).then(function(data) {
                 $(".greyout").each(function () {
                     $(this).removeClass(addclass);
@@ -187,7 +197,7 @@ button, select {
                 type: "POST",
                 data: userInfo,
                 contentType: "application/json; charset=utf-8",
-                url: "http://localhost:8081/initialize"
+                url: "http://localhost:8080/initialize"
             }).then(function(data) {
                 window.location.reload();
             });

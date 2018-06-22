@@ -51,21 +51,30 @@ def do_create():
 def check():
     with sqlite3.connect(db_filename) as conn:
         c = conn.cursor()
-        c.execute('SELECT * FROM stocks WHERE user = ? AND password = ?', ('all', base64.b64encode(str.encode('all'))))
-        for row in c.fetchall():
-            print(row)
+        c.execute('SELECT * FROM stocks')
+        for usr, code, passwd in c.fetchall():
+            print(usr, code, passwd)
 
 
-def update_initialize():
+def update():
     all_images = get_image_files()
 
     with sqlite3.connect(db_filename) as conn:
         c = conn.cursor()
-        c.execute('UPDATE stocks SET list = ? WHERE user = ? AND password = ?',
-                  (json.dumps(get_image_files()), 'all', base64.b64encode(str.encode('all'))))
+        c.execute('SELECT * FROM stocks')
+        for usr, code, passwd in c.fetchall():
+            to_update = {}
+            code = json.loads(code)
+            for dir_name in all_images:
+                if dir_name not in code.keys():
+                    to_update[dir_name] = all_images[dir_name]
+            to_update.update(code)
+            print(usr, to_update, passwd)
+            c.execute('UPDATE stocks SET list = ? WHERE user = ? AND password = ?',
+                      (json.dumps(to_update), 'all', passwd))
 
 
 if __name__ == '__main__':
-    # do_create()
+    do_create()
     check()
-    # update_initialize()
+    # update()
