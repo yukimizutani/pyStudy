@@ -1,3 +1,4 @@
+# # -*- coding: utf-8 -*-
 class TrainCar(object):
     def __init__(self, color_type=None, passenger_list=[]):
         self.color_type = color_type

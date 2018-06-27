@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 import csv
 import os
 import re
+import urllib2
 import urllib
 
 from bs4 import BeautifulSoup
@@ -11,18 +13,17 @@ dataReader = csv.reader(open('resources/company_list', 'rt'))
 for row in dataReader:
     filename = row[0] + ".txt"
     if not os.path.isfile(filename):
-        opener = urllib.request.build_opener()
+        opener = urllib2.build_opener()
         opener.addheaders = [('User-agent', 'Mozilla/5.0')]
 
         if not row[2]:
-            # 検索結果の読み込み
             url_site = "https://www.google.co.jp/search?num=3&q=" + urllib.parse.quote(re.sub("株式会社", "", row[1]))
             html = opener.open(url_site)
             bs_site = BeautifulSoup(html.read(), "lxml")
-            if not bs_site.find_all("div", {"id": "res"})[0].get_text():  # 0件ヒット
+            if not bs_site.find_all("div", {"id": "res"})[0].get_text():
                 continue
             elif len(
-                    re.findall("wiki", bs_site.find_all("div", {"id": "res"})[0].cite.get_text())) == 0:  # wikipediaが1位
+                    re.findall("wiki", bs_site.find_all("div", {"id": "res"})[0].cite.get_text())) == 0:
                 if len(re.findall("/[^\./]*(ja)|(jp)[^\./]*$",
                                   bs_site.find_all("div", {"id": "res"})[0].cite.get_text())) > 0:
                     url_company = bs_site.find("div", {"id": "res"}).cite.get_text()
