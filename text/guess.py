@@ -1,7 +1,7 @@
 import codecs
 import chardet
 
-inputFile = '/home/yuki/PycharmProjects/pyStudy/bottle/code.db'
+inputFile = '/home/yuki/a10/threatlist-tdid_f7539a1b-all-latest.csv'
 output = '/home/yuki/xsiem_packages/1.2.3-beta1/Logstorage-xsiem-v1.2.3/master/export_userlist.csv'
 
 
@@ -26,4 +26,4 @@ def read(encoding, should_write):
 
 if __name__ == '__main__':
     encd = guess()
-    read(encd, False)
+    # read(encd, False)
