@@ -1,6 +1,9 @@
-input_file = 'tes.csv'
-
 if __name__ == '__main__':
-    f = open(input_file)
-    for line in f.read():
-        print(line)
+    ver = 'beta2'
+    tes = 'Test '
+    reviewer = 'Yuki'
+    result = 'Good'
+    comments = ''
+    print('|_. Version |_. Test  |_. Reviewer |_. Result |_. Comments |')
+    for i in range(1, 17):
+        print('|{}|{}|{}|{}|{}|'.format(ver, tes + str(i), reviewer, result, comments))
