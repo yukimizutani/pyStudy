@@ -1,0 +1,14 @@
+* {{bug|13683}} Indexer node installation
+* {{bug|13679}} Add service registration to the installer
+* {{bug|13674}} Fix some sentences in the installer
+* {{bug|13748}} Clean up the windows scripts (rename, ...)
+* {{bug|13680}} Improve error handling in the installer
+* {{bug|13747}} Do not try to validate very big license files
+* {{bug|13750}} Update notice file (especially javaFX)
+* {{bug|13805}} A10N script
+* {{bug|13813}} CIDRjoin ipv4 without mask matching
+* {{bug|13808}} UNC path support in ES backup
+* {{bug|13807}} NPE in alert history
+* {{bug|13801}} Calendar is in english
+* {{bug|13802}} Exec notifier GUI broken in IE
+* {{bug|13812}} Fix error messages in SMTPs

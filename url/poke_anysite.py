@@ -1,7 +1,7 @@
 import urllib.request, urllib.error
 from bs4 import BeautifulSoup
 
-url = 'https://news.cardmics.com/entry/amex-hakko-speed/'
+url = 'https://altema.jp/dffoo/chara/42'
 
 
 def show_text(soup):
