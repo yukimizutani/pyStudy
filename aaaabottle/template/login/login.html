@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title> test </title>
+    <style type="text/css">
+    body {
+        color: red;
+        font-size: 30px;
+    }
+    button, input {
+        font-size: 30px;
+    }
+    .block {
+        display: block;
+    }
+
+    </style>
+</head>
+<body>
+<form action="/my_code" method="post">
+    <div class="block">ユーザー名: <input name="username" type="text" value="{{username}}"/></div>
+    <div class="block">パスワード: <input name="password" type="password" value="{{password}}"/></div>
+    <div class="block"><button type='submit' name='action' value='login'>ログイン</button></div>
+</form>
+<form method="post" action="/create_new">
+<button type="submit">新規ユーザー作成</button>
+</form>
+</body>
+</html>

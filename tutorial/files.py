@@ -1,6 +1,6 @@
 import os
 
-root_dir = "/home/yuki/PycharmProjects/pyStudy/bottle/static/images"
+root_dir = "/home/yuki/PycharmProjects/pyStudy/aaaabottle/static/images"
 file_set = set()
 file_dict = {}
 
