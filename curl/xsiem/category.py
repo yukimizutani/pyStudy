@@ -14,7 +14,7 @@ if __name__ == '__main__':
     c.setopt(pycurl.USERPWD, 'admin:admin')
     c.setopt(pycurl.PROXY, 'localhost')
     c.setopt(pycurl.PROXYPORT, 8090)
-    c.setopt(c.URL, 'http://admin:admin@localhost:8090/v1/receivers/1/import/add_mappings')
+    c.setopt(c.URL, 'http://admin:admin@localhost:8090/v1/category')
     for j in requests:
         c.setopt(pycurl.POSTFIELDS, j)
         res = c.perform()

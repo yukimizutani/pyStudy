@@ -1,12 +1,13 @@
 import pycurl, json
 
-pre = '{\"name\":\"test'
-post = '\",\"type\":\"simple\"}'
+pre = '{\"parameter\":\"'
+mid = '\",\"mappedField\":\"'
+post = '\"}'
 
 requests = []
 
-for i in range(0, 10):
-    requests.append(pre + str(i) + post)
+for i in range(0, 1000):
+    requests.append(pre + str(i) + mid + str(i) + post)
 
 if __name__ == '__main__':
     c = pycurl.Curl()
@@ -15,11 +16,9 @@ if __name__ == '__main__':
     c.setopt(pycurl.PROXY, 'localhost')
     c.setopt(pycurl.PROXYPORT, 8090)
     c.setopt(c.URL, 'http://admin:admin@localhost:8090/v1/receivers/1/import/add_mappings')
-    for j in requests:
-        c.setopt(pycurl.POSTFIELDS, j)
-        res = c.perform()
-        print(str(res))
-
-    # js = json.loads(str(res))
-    #
-    # print(js)
+    data = '{\"mappings\":[' + ','.join(requests) + ']}'
+    print(data)
+    c.setopt(pycurl.CUSTOMREQUEST, 'PUT')
+    c.setopt(pycurl.POSTFIELDS, data)
+    res = c.perform()
+    print(str(res))
