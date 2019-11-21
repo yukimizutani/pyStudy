@@ -31,7 +31,7 @@ def delete_all():
 
     for res in js['resources']:
         delete_request.setopt(delete_request.URL,
-                              'http://admin:admin@localhost:8090/v1/fields/' + str(res['resource']['id']))
+                              'http://admin:admin@xsiem02.dev.infoscience.co.jp:8090/v1/fields/' + str(res['resource']['id']))
         delete_request.perform()
     delete_request.close()
 
