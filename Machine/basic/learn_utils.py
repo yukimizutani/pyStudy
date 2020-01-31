@@ -27,14 +27,14 @@ def sliding_chunker(data, window_len, slide_len):
     return chunks
 
 
-def plot_waves(waves, step):
+def plot_waves(waves, step, title):
     """
     Plot a set of 9 waves from the given set, starting from the first one
     and increasing in index by 'step' for each subsequent graph
     """
     plt.figure()
-    n_graph_rows = 3
-    n_graph_cols = 3
+    n_graph_rows = 2
+    n_graph_cols = 2
     graph_n = 1
     wave_n = 0
     for _ in range(n_graph_rows):
@@ -45,8 +45,15 @@ def plot_waves(waves, step):
             graph_n += 1
             wave_n += step
     # fix subplot sizes so that everything fits
-    plt.tight_layout()
+    if len(title) > 0:
+        plt.title(title)
     plt.show()
+
+
+def show_every_wave(waves):
+    for i, wave in enumerate(waves):
+        plt.plot(wave)
+        plt.show()
 
 
 def reconstruct(data, window, clusterer):

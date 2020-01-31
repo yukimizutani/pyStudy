@@ -1,8 +1,8 @@
 import codecs
 import chardet
 
-inputFile = '/home/yuki/a10/threatlist-tdid_f7539a1b-all-latest.csv'
-output = '/home/yuki/xsiem_packages/1.2.3-beta1/Logstorage-xsiem-v1.2.3/master/export_userlist.csv'
+inputFile = '/home/yuki/Downloads/再突合コマンドVer1.2.txt'
+output = './out2'
 
 
 def guess():
@@ -15,7 +15,7 @@ def guess():
 
 def read(encoding, should_write):
     f2 = codecs.open(inputFile, 'r', encoding['encoding'])
-    f3 = codecs.open(output, 'w', 'shift_jis', 'ignore')
+    f3 = codecs.open(output, 'w', 'utf-8')
     for i, l in enumerate(f2):
         print(l.rstrip())
         if should_write:
@@ -26,4 +26,4 @@ def read(encoding, should_write):
 
 if __name__ == '__main__':
     encd = guess()
-    # read(encd, False)
+    read(encd, True)

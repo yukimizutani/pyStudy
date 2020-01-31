@@ -1,0 +1,6 @@
+log = 'processors=8, physical.memory.total=31.3G, physical.memory.free=519.6M, swap.space.total=16.0G, swap.space.free=14.6G, heap.memory.used=6.0G, heap.memory.free=2.0G, heap.memory.total=8.0G, heap.memory.max=8.0G, heap.memory.used/total=74.41%, heap.memory.used/max=74.41%, minor.gc.count=823538, minor.gc.time=10351029ms, major.gc.count=0, major.gc.time=0ms, load.process=13.03%, load.system=15.24%, load.systemAverage=0.83, thread.count=341, thread.peakCount=374, cluster.timeDiff=0, event.q.size=0, executor.q.async.size=0, executor.q.client.size=0, executor.q.query.size=0, executor.q.scheduled.size=0, executor.q.io.size=0, executor.q.system.size=0, executor.q.operations.size=0, executor.q.priorityOperation.size=0, operations.completed.count=86588303, executor.q.mapLoad.size=0, executor.q.mapLoadAllKeys.size=0, executor.q.cluster.size=0, executor.q.response.size=0, operations.running.count=0, operations.pending.invocations.percentage=0.00%, operations.pending.invocations.count=18, proxy.count=0, clientEndpoint.count=0, connection.active.count=0, client.connection.count=0, connection.count=0'
+
+items = log.split(',')
+for item in items:
+    splitted = item.split('=')
+    print('{}: {}'.format(splitted[0].strip(), splitted[1]))
