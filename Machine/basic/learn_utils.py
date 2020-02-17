@@ -33,27 +33,33 @@ def plot_waves(waves, step, title):
     and increasing in index by 'step' for each subsequent graph
     """
     plt.figure()
-    n_graph_rows = 2
-    n_graph_cols = 2
+    n_graph_rows = 3
+    n_graph_cols = 3
     graph_n = 1
     wave_n = 0
     for _ in range(n_graph_rows):
         for _ in range(n_graph_cols):
-            axes = plt.subplot(n_graph_rows, n_graph_cols, graph_n)
-            axes.set_ylim([-100, 150])
-            plt.plot(waves[wave_n])
-            graph_n += 1
-            wave_n += step
+            if len(waves) > wave_n:
+                axes = plt.subplot(n_graph_rows, n_graph_cols, graph_n)
+                plt.plot(waves[wave_n])
+                graph_n += 1
+                wave_n += step
     # fix subplot sizes so that everything fits
     if len(title) > 0:
         plt.title(title)
     plt.show()
 
 
+def show_wave(wave):
+    plt.plot(wave)
+    plt.xlabel("Sample number")
+    plt.ylabel("Signal value")
+    plt.show()
+
+
 def show_every_wave(waves):
     for i, wave in enumerate(waves):
-        plt.plot(wave)
-        plt.show()
+        show_wave(wave)
 
 
 def reconstruct(data, window, clusterer):
