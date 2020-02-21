@@ -1,33 +1,45 @@
+# -*- coding: utf-8 -*-
+
 import urllib.request, urllib.error
 from bs4 import BeautifulSoup
+from urllib.parse import urlparse
 
-url = 'https://altema.jp/dffoo/chara/42'
+japanese = '恐怖の泉'
+url_pre = 'https://' + urllib.parse.quote(japanese) + '.com/kaidan/'
+url_post = 'wa.html'
 
 
-def show_text(soup):
-    for script in soup(["script", "style"]):
+def show_text(soup1):
+    # remove scripts
+    for script in soup1(["script", "style"]):
         script.decompose()
-    text = soup.get_text().split('\n')
+    text = soup1.get_text().replace('。', '。\n').split('\n')
     for li in text:
-        if not li == '':
-            print(str(li))
+        if '前の話' in li:
+            break
+        else:
+            print(li)
 
 
-def show_raw(soup):
-    print(soup)
+def show_raw(soup2):
+    print(soup2)
 
 
 if __name__ == '__main__':
-    try:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0",
-        }
-        request = urllib.request.Request(url=url, headers=headers)
-        res = urllib.request.urlopen(request)
-    except urllib.error.URLError as e:
-        print(e.reason)
-        pass
-    else:
-        html = res.read()
-        soup = BeautifulSoup(html)
-        show_text(soup)
+    for i in range(300, 320):
+        url = url_pre + str(i) + url_post
+        try:
+            headers = {
+                "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0",
+            }
+            request = urllib.request.Request(url=url, headers=headers)
+            request.add_header('Host', request.host.encode('idna'))
+            res = urllib.request.urlopen(request)
+        except urllib.error.URLError as e:
+            print(e.reason, e.strerror)
+            pass
+        else:
+            html = res.read()
+            soup = BeautifulSoup(html, features="html.parser")
+            show_text(soup)
+        print('')
