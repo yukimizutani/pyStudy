@@ -149,7 +149,7 @@ def root():
                 rec = c.fetchone()
                 if rec:
                     print("Found!")
-                    return template('new/create_new.html', message="そのユーザー名は使用できません")
+                    return template('Att.2020-04_30_水谷祐貴.csv/create_new.html', message="そのユーザー名は使用できません")
                 else:
                     child_elem = template('code_content/code_content.tpl', codeDict=load_db(usr, password))
                     return template('base/child.tpl', contentType='code', childElem=child_elem)
@@ -181,7 +181,7 @@ def login():
 
 @app.route('/create_new', method='POST')
 def create_new():
-    return template('new/create_new.html')
+    return template('Att.2020-04_30_水谷祐貴.csv/create_new.html')
 
 
 @app.route('/save_items', method='POST')

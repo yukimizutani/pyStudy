@@ -27,7 +27,7 @@ def show_raw(soup2):
 
 if __name__ == '__main__':
     for i in range(200, 299):
-        url = url_pre + str(i) + url_post
+        url = 'https://www.rakuten.co.jp/'
         try:
             headers = {
                 "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0",
@@ -41,5 +41,5 @@ if __name__ == '__main__':
         else:
             html = res.read()
             soup = BeautifulSoup(html, features="html.parser")
-            show_text(soup)
+            show_raw(soup)
         print('')

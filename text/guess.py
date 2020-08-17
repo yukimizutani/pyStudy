@@ -1,7 +1,7 @@
 import codecs
 import chardet
 
-inputFile = '/home/yuki/Downloads/再突合コマンドVer1.2.txt'
+inputFile = 'C:\\Users\\ymizu\\Downloads\\Att.2020-04_30_楠木椋.csv'
 output = './out2'
 
 
@@ -26,4 +26,4 @@ def read(encoding, should_write):
 
 if __name__ == '__main__':
     encd = guess()
-    read(encd, True)
+    # read(encd, True)

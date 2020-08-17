@@ -382,7 +382,7 @@ class Router(object):
             yield prefix + rule[offset:], None, None
 
     def add(self, rule, method, target, name=None):
-        """ Add a new rule or replace the target for an existing rule. """
+        """ Add a Att.2020-04_30_水谷祐貴.csv rule or replace the target for an existing rule. """
         anons = 0  # Number of anonymous wildcards found
         keys = []  # Names of keys
         pattern = ''  # Regular expression pattern with named groups
@@ -1167,7 +1167,7 @@ class BaseRequest(object):
     """ A wrapper for WSGI environment dictionaries that adds a lot of
         convenient access methods and properties. Most of them are read-only.
 
-        Adding new attributes to a request actually adds them to the environ
+        Adding Att.2020-04_30_水谷祐貴.csv attributes to a request actually adds them to the environ
         dictionary (as 'aaaabottle.request.ext.<name>'). This is the recommended
         way to store and access request-specific data.
     """
@@ -1547,7 +1547,7 @@ class BaseRequest(object):
         return route[0] if route else None
 
     def copy(self):
-        """ Return a new :class:`Request` with a shallow :attr:`environ` copy. """
+        """ Return a Att.2020-04_30_水谷祐貴.csv :class:`Request` with a shallow :attr:`environ` copy. """
         return Request(self.environ.copy())
 
     def get(self, value, default=None):
@@ -1766,7 +1766,7 @@ class BaseResponse(object):
         return self._headers.get(_hkey(name), [default])[-1]
 
     def set_header(self, name, value):
-        """ Create a new response header, replacing any previously defined
+        """ Create a Att.2020-04_30_水谷祐貴.csv response header, replacing any previously defined
             headers with the same name. """
         self._headers[_hkey(name)] = [_hval(value)]
 
@@ -1812,7 +1812,7 @@ class BaseResponse(object):
         return default
 
     def set_cookie(self, name, value, secret=None, digestmod=hashlib.sha256, **options):
-        """ Create a new cookie or replace an old one. If the `secret` parameter is
+        """ Create a Att.2020-04_30_水谷祐貴.csv cookie or replace an old one. If the `secret` parameter is
             set, create a `Signed Cookie` (described below).
 
             :param name: the name of the cookie.
@@ -2176,7 +2176,7 @@ class MultiDict(DictMixin):
         return default
 
     def append(self, key, value):
-        """ Add a new value to the list of values for this key. """
+        """ Add a Att.2020-04_30_水谷祐貴.csv value to the list of values for this key. """
         self.dict.setdefault(key, []).append(value)
 
     def replace(self, key, value):
@@ -2543,7 +2543,7 @@ class ConfigDict(dict):
         return self._meta.get(key, {}).get(metafield, default)
 
     def meta_set(self, key, metafield, value):
-        """ Set the meta field for a key to a new value. """
+        """ Set the meta field for a key to a Att.2020-04_30_水谷祐貴.csv value. """
         self._meta.setdefault(key, {})[metafield] = value
 
     def meta_list(self, key):
@@ -2566,7 +2566,7 @@ class ConfigDict(dict):
                 yield overlay
 
     def _make_overlay(self):
-        """ (Unstable) Create a new overlay that acts like a chained map: Values
+        """ (Unstable) Create a Att.2020-04_30_水谷祐貴.csv overlay that acts like a chained map: Values
             missing in the overlay are copied from the source map. Both maps
             share the same meta entries.
 
@@ -2609,7 +2609,7 @@ class AppStack(list):
         return self.default
 
     def push(self, value=None):
-        """ Add a new :class:`Bottle` instance to the stack """
+        """ Add a Att.2020-04_30_水谷祐貴.csv :class:`Bottle` instance to the stack """
         if not isinstance(value, Bottle):
             value = Bottle()
         self.append(value)
@@ -2676,10 +2676,10 @@ class ResourceManager(object):
         self.cache = {}
 
     def add_path(self, path, base=None, index=None, create=False):
-        """ Add a new path to the list of search paths. Return False if the
+        """ Add a Att.2020-04_30_水谷祐貴.csv path to the list of search paths. Return False if the
             path does not exist.
 
-            :param path: The new search path. Relative paths are turned into
+            :param path: The Att.2020-04_30_水谷祐貴.csv search path. Relative paths are turned into
                 an absolute and normalized form. If the path looks like a file
                 (not ending in `/`), the filename is stripped off.
             :param base: Path used to absolutize relative search paths.
@@ -3289,7 +3289,7 @@ class WSGIRefServer(ServerAdapter):
 
 class CherryPyServer(ServerAdapter):
     def run(self, handler):  # pragma: no cover
-        depr(0, 13, "The wsgi server part of cherrypy was split into a new "
+        depr(0, 13, "The wsgi server part of cherrypy was split into a Att.2020-04_30_水谷祐貴.csv "
                     "project called 'cheroot'.", "Use the 'cheroot' server "
                                                  "adapter instead of cherrypy.")
         from cherrypy import wsgiserver  # This will fail for CherryPy >= 9
@@ -3642,7 +3642,7 @@ def load_app(target):
         application object. See :func:`load` for the target parameter. """
     global NORUN
     NORUN, nr_old = True, NORUN
-    tmp = default_app.push()  # Create a new "default application"
+    tmp = default_app.push()  # Create a Att.2020-04_30_水谷祐貴.csv "default application"
     try:
         rv = load(target)  # Import the target module
         return rv if callable(rv) else tmp
@@ -3823,7 +3823,7 @@ class BaseTemplate(object):
                  name=None,
                  lookup=None,
                  encoding='utf8', **settings):
-        """ Create a new template.
+        """ Create a Att.2020-04_30_水谷祐貴.csv template.
         If the source parameter (str or buffer) is missing, the name argument
         is used to guess a template filename. Subclasses can assume that
         self.source and/or self.filename are set. Both are strings.

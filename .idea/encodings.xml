@@ -2,5 +2,10 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/aaaabottle/createDb.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/text/2020-05_水谷祐貴.csv" charset="windows-31j" />
+    <file url="file://$PROJECT_DIR$/text/Att.2020-04_30_楠木椋.csv" charset="windows-31j" />
+    <file url="file://$PROJECT_DIR$/text/out" charset="windows-31j" />
+    <file url="file://$PROJECT_DIR$/text/out0702" charset="windows-31j" />
+    <file url="file://$PROJECT_DIR$/url/out" charset="windows-31j" />
   </component>
 </project>
